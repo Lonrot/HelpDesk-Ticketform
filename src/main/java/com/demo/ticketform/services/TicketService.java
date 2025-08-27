@@ -27,7 +27,7 @@ public class TicketService {
         List<Ticket> allTickets = ticketRepository.findAllByUserId(user.getId());
         return allTickets;
     }
-
+    //Test
     public Ticket findTicketByUser(User user){
         return ticketRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Ticket not found"));
     }
