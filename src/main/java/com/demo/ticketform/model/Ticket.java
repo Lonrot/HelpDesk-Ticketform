@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.processing.Pattern;
 
 @Entity
 @Data
@@ -26,6 +27,8 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status = Status.IN_PROGRESS;
 
+    @Column(name = "reference_code", length = 6, unique = true)
+    private String referenceCode;
 
     /**
      * LAZY avoids fetching User unless needed.
