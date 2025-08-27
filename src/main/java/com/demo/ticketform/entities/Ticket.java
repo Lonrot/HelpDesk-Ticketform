@@ -20,17 +20,15 @@ public class Ticket {
     //TODO: Encapsulate and creationTime refactor, complete Enum. Check entity relation
 
     @Id
-    Long id;
-    String category;
-    String subject;
+    private Long id;
+    private String category;
+    private String subject;
     private String description;
     private LocalDateTime createdAt = LocalDateTime.now();
-    StatusEnum status;
-    String description;
-    LocalDateTime createdAt;
-    boolean status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     @ManyToOne(targetEntity = User.class ,fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     User user;
 }

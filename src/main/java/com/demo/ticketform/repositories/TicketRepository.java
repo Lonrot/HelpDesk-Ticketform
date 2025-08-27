@@ -13,5 +13,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     Optional<Ticket> getTicketByUserId(Long id);
     List<Ticket> findAllByUserId(Long id);
     void removeTicketByUser(Long id);
+    void removeTicketById(Long id);
     Optional<Ticket> findTicketByUser(User users);
 }
