@@ -1,13 +1,13 @@
 package com.demo.ticketform.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,14 +17,18 @@ import java.time.LocalDateTime;
 @Setter
 public class Ticket {
 
-    @Id
-    Long id;
-    String category;
-    String subject;
-    String description;
-    LocalDateTime createdAt;
-    boolean status;
+    //TODO: Encapsulate and creationTime refactor, complete Enum. Check entity relation
 
-    @ManyToOne(targetEntity = User.class)
+    @Id
+    private Long id;
+    private String category;
+    private String subject;
+    private String description;
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
+
+    @ManyToOne(targetEntity = User.class ,fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     User user;
 }
