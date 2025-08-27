@@ -32,10 +32,14 @@ public class TicketService {
         return ticketRepository.findById(user.getId()).orElseThrow(() -> new RuntimeException("Ticket not found"));
     }
 
-    public void removeTicketByUser(Long id){
-        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+    public void removeTicketByUser(User user){
+        Optional<Ticket> optionalTicket = ticketRepository.findById(user.getId());
         optionalTicket.ifPresent(ticket -> ticketRepository.delete(ticket));
+    }
 
+    public void removeTicketById(Long id){
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new RuntimeException("Ticket not Found"));
+        ticketRepository.delete(ticket);
     }
 
 
