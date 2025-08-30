@@ -15,4 +15,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     void removeTicketByUser(Long id);
     void removeTicketById(Long id);
     Optional<Ticket> findTicketByUser(User users);
+    //Es esto necesario?
+    Ticket saveTicket(Ticket ticket);
 }
