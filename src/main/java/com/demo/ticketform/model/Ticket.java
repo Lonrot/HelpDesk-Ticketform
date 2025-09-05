@@ -9,7 +9,8 @@ import org.hibernate.annotations.processing.Pattern;
 @Entity
 @Data
 @Table(name = "TICKET")
-@NoArgsConstructor@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket {
 
     @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
