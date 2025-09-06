@@ -2,21 +2,22 @@ package com.demo.ticketform.service;
 
 import com.demo.ticketform.model.Ticket;
 import com.demo.ticketform.repository.TicketRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
+@Transactional
 public class TicketService {
 
-    TicketRepository repository;
-    public TicketService(TicketRepository ticketRepository){
-        this.repository = ticketRepository;
-    }
+    private final TicketRepository repository;
+
 
     public void saveTicket(Ticket ticket){
         repository.save(ticket);
