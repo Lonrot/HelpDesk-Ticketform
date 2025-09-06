@@ -26,8 +26,8 @@ public class TicketService {
         var tickets = repository.findByUser_Id(ID);
         return tickets.isEmpty() ? List.of() : tickets;
     }
-    public Optional<Ticket> getTicketByID(Long ID){
-        return repository.findById(ID);
+    public Ticket getTicketByID(Long ID){
+        return repository.findById(ID).orElse(null);
     }
 
     public boolean deleteTicketByID(Long ID){

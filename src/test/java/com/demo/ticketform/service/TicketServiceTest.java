@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -60,7 +61,7 @@ class TicketServiceTest {
 
     @Test
     void getAllTicketsByUserID_returnsTickets_whenRepositoryHasResults() {
-        when(repository.findTicketsByUser_Id(existingUserID)).thenReturn(List.of(t1, t2, t3));
+        when(repository.findByUser_Id(existingUserID)).thenReturn(List.of(t1, t2, t3));
 
         var result = service.getAllTicketsByUserID(existingUserID);
 
@@ -68,78 +69,78 @@ class TicketServiceTest {
         assertSame(t1, result.get(0));
         assertSame(t2, result.get(1));
         assertSame(t3, result.get(2));
-        verify(repository).findTicketsByUser_Id(existingUserID);
+        verify(repository).findByUser_Id(existingUserID);
     }
 
     @Test
     @DisplayName("Get List Of Tickets")
     void getAllTicketsByUserID_returnsEmptyList_whenNoResults() {
-        when(repository.findTicketsByUser_Id(missingUserID)).thenReturn(List.of());
+        when(repository.findByUser_Id(missingUserID)).thenReturn(List.of());
 
         var result = service.getAllTicketsByUserID(missingUserID);
 
         assertNotNull(result);
         assertTrue(result.isEmpty());
-        verify(repository,times(1)).findTicketsByUser_Id(missingUserID);
+        verify(repository,times(1)).findByUser_Id(missingUserID);
     }
 
     @Test
     void getTicketByID_returnsTicket_whenFound() {
-        when(repository.findTicketByID(existingTicketID)).thenReturn(existingTicket);
+        when(repository.findById(existingTicketID)).thenReturn(Optional.ofNullable(existingTicket));
 
         var result = service.getTicketByID(existingTicketID);
 
         assertSame(existingTicket, result);
-        verify(repository).findTicketByID(existingTicketID);
+        verify(repository).findById(existingTicketID);
     }
 
     @Test
     void getTicketByID_returnsNull_whenNotFound() {
-        when(repository.findTicketByID(missingTicketID)).thenReturn(null);
+        when(repository.findById(missingTicketID)).thenReturn(null);
 
         var result = service.getTicketByID(missingTicketID);
 
         assertNull(result);
-        verify(repository).findTicketByID(missingTicketID);
+        verify(repository).findById(missingTicketID);
     }
 
     @Test
     void deleteTicketByID_returnsTrue_whenDeleteSucceeds() {
-        doNothing().when(repository).deleteTicketByID(existingTicketID);
+        doNothing().when(repository).deleteById(existingTicketID);
 
         boolean deleted = service.deleteTicketByID(existingTicketID);
 
         assertTrue(deleted);
-        verify(repository).deleteTicketByID(existingTicketID);
+        verify(repository).deleteById(existingTicketID);
     }
 
     @Test
     void deleteTicketByID_returnsFalse_whenNotFound() {
-        doThrow(new EmptyResultDataAccessException(1)).when(repository).deleteTicketByID(missingTicketID);
+        doThrow(new EmptyResultDataAccessException(1)).when(repository).deleteById(missingTicketID);
 
         boolean deleted = service.deleteTicketByID(missingTicketID);
 
         assertFalse(deleted);
-        verify(repository).deleteTicketByID(missingTicketID);
+        verify(repository).deleteById(missingTicketID);
     }
 
     @Test
     void deleteTicketByUserID_returnsTrue_whenDeleteSucceeds() {
-        doNothing().when(repository).deleteTicketByUser_Id(existingUserID);
+        doNothing().when(repository).deleteByUser_Id(existingUserID);
 
         boolean deleted = service.deleteTicketByUserID(existingUserID);
 
         assertTrue(deleted);
-        verify(repository).deleteTicketByUser_Id(existingUserID);
+        verify(repository).deleteByUser_Id(existingUserID);
     }
 
     @Test
     void deleteTicketByUserID_returnsFalse_whenNotFound() {
-        doThrow(new EmptyResultDataAccessException(1)).when(repository).deleteTicketByUser_Id(missingUserID);
+        doThrow(new EmptyResultDataAccessException(1)).when(repository).deleteByUser_Id(missingUserID);
 
         boolean deleted = service.deleteTicketByUserID(missingUserID);
 
         assertFalse(deleted);
-        verify(repository).deleteTicketByUser_Id(missingUserID);
+        verify(repository).deleteByUser_Id(missingUserID);
     }
 }
